@@ -1,0 +1,1057 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awesome NFC - The Ultimate NFC Resource Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700&family=Satoshi:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            font-family: 'Satoshi', sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Cabinet Grotesk', sans-serif;
+            font-weight: 700;
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5rem;
+            background: #ffe17c;
+            border-bottom: 2px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 700;
+            font-family: 'Cabinet Grotesk', sans-serif;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: #000;
+            border: 2px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #ffe17c;
+            font-weight: bold;
+        }
+
+        nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            font-family: 'Satoshi', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            text-decoration: none;
+            color: #000;
+            transition: all 0.2s;
+        }
+
+        nav a:hover {
+            opacity: 0.7;
+        }
+
+        .btn-trial {
+            background: #000;
+            color: #fff;
+            padding: 12px 24px;
+            border: 2px solid #000;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 8px 8px 0px 0px #000;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 14px;
+        }
+
+        .btn-trial:hover {
+            transform: translate(4px, 4px);
+            box-shadow: 4px 4px 0px 0px #000;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            background: #ffe17c;
+            border-bottom: 2px solid #000;
+            padding: 6rem 2rem;
+            margin-top: 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: radial-gradient(circle, rgba(0,0,0,0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+        }
+
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-left h1 {
+            font-size: 64px;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: #000;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+        }
+
+        .highlight {
+            -webkit-text-stroke: 2px #000;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #fff;
+            border: 2px solid #000;
+            border-radius: 999px;
+            padding: 8px 16px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .btn-primary {
+            background: #000;
+            color: #fff;
+            padding: 16px 32px;
+            border: 2px solid #000;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 8px 8px 0px 0px #000;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-family: 'Satoshi', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .btn-primary:hover {
+            transform: translate(4px, 4px);
+            box-shadow: 4px 4px 0px 0px #000;
+        }
+
+        .btn-secondary {
+            background: #fff;
+            color: #000;
+            padding: 16px 32px;
+            border: 2px solid #000;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px 0px #000;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-family: 'Satoshi', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .btn-secondary:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px 0px #000;
+        }
+
+        .browser-mockup {
+            background: #fff;
+            border: 2px solid #000;
+            border-radius: 12px;
+            box-shadow: 12px 12px 0px 0px #000;
+            overflow: hidden;
+        }
+
+        .browser-header {
+            background: #000;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            gap: 8px;
+        }
+
+        .browser-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background: #ff5f57; }
+        .dot-yellow { background: #febc2e; }
+        .dot-green { background: #28c840; }
+
+        .browser-content {
+            padding: 2rem;
+            background: #fff;
+            min-height: 300px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .chart-placeholder {
+            background: #ffe17c;
+            border: 2px solid #000;
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .chart-bar {
+            background: #b7c6c2;
+            height: 8px;
+            border: 1px solid #000;
+            margin-bottom: 8px;
+        }
+
+        /* ===== SOCIAL PROOF ===== */
+        .marquee-section {
+            background: #171e19;
+            border-bottom: 2px solid #000;
+            padding: 2rem 0;
+            overflow: hidden;
+        }
+
+        .marquee {
+            display: flex;
+            gap: 3rem;
+            animation: scroll 30s linear infinite;
+            width: fit-content;
+        }
+
+        .marquee-item {
+            font-family: 'Cabinet Grotesk', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #b7c6c2;
+            opacity: 0.5;
+            white-space: nowrap;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* ===== PROBLEM VS SOLUTION ===== */
+        .pvs-section {
+            background: #fff;
+            padding: 4rem 2rem;
+            border-bottom: 2px solid #000;
+        }
+
+        .pvs-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .pvs-card {
+            border-radius: 48px;
+            padding: 2rem;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .problem-card {
+            background: #f4f4f5;
+            border: 2px dashed #999;
+            opacity: 0.7;
+        }
+
+        .solution-card {
+            background: #ffe17c;
+            border: 2px solid #000;
+            box-shadow: 8px 8px 0px 0px #000;
+        }
+
+        .pvs-card h3 {
+            font-size: 28px;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .pvs-list {
+            list-style: none;
+        }
+
+        .pvs-list li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+        }
+
+        .pvs-list li::before {
+            content: '✗';
+            width: 24px;
+            height: 24px;
+            background: #999;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #000;
+            flex-shrink: 0;
+        }
+
+        .solution-card .pvs-list li::before {
+            content: '✓';
+            background: #000;
+        }
+
+        /* ===== FEATURES GRID ===== */
+        .features-section {
+            background: #ffe17c;
+            border-top: 2px solid #000;
+            border-bottom: 2px solid #000;
+            padding: 4rem 2rem;
+        }
+
+        .features-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: #fff;
+            border: 2px solid #000;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 4px 4px 0px 0px #000;
+            transition: all 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px 0px #000;
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: #b7c6c2;
+            border: 2px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 24px;
+            transition: all 0.2s;
+        }
+
+        .feature-card:hover .feature-icon {
+            background: #ffe17c;
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #666;
+        }
+
+        /* ===== HOW IT WORKS ===== */
+        .how-section {
+            background: #171e19;
+            border-bottom: 2px solid #000;
+            padding: 4rem 2rem;
+            color: #fff;
+        }
+
+        .how-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .how-title {
+            text-align: center;
+            font-size: 48px;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            font-family: 'Cabinet Grotesk', sans-serif;
+            color: #fff;
+        }
+
+        .steps-flow {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            position: relative;
+        }
+
+        .steps-flow::before {
+            content: '';
+            position: absolute;
+            top: 60px;
+            left: 8%;
+            right: 8%;
+            height: 2px;
+            background: #272727;
+            z-index: 0;
+        }
+
+        .step {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .step-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: bold;
+            position: relative;
+            background: #272727;
+            color: #fff;
+            border: 4px solid;
+        }
+
+        .step:nth-child(1) .step-circle {
+            border-color: #b7c6c2;
+            box-shadow: 0 0 0 8px #b7c6c2;
+        }
+
+        .step:nth-child(2) .step-circle {
+            border-color: #ffe17c;
+            box-shadow: 0 0 0 8px #ffe17c;
+        }
+
+        .step:nth-child(3) .step-circle {
+            border-color: #fff;
+            box-shadow: 0 0 0 8px #fff;
+        }
+
+        .step h4 {
+            font-size: 20px;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .step p {
+            font-size: 14px;
+            color: #b7c6c2;
+            line-height: 1.5;
+        }
+
+        /* ===== USE CASES ===== */
+        .usecases-section {
+            background: #fff;
+            padding: 4rem 2rem;
+            border-bottom: 2px solid #000;
+        }
+
+        .usecases-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .usecases-title {
+            font-size: 48px;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            font-family: 'Cabinet Grotesk', sans-serif;
+            text-align: center;
+        }
+
+        .usecases-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .usecase-card {
+            border: 2px solid #000;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .usecase-card:nth-child(1) {
+            background: #b7c6c2;
+            border-radius: 12px 48px 12px 48px;
+        }
+
+        .usecase-card:nth-child(2) {
+            background: #ffe17c;
+            box-shadow: 8px 8px 0px 0px #000;
+            border-radius: 48px 12px 48px 12px;
+        }
+
+        .usecase-card:nth-child(3) {
+            background: #272727;
+            color: #fff;
+            border-radius: 12px 12px 48px 48px;
+        }
+
+        .usecase-badge {
+            display: inline-block;
+            background: #fff;
+            color: #000;
+            padding: 6px 12px;
+            border: 2px solid #000;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .usecase-card:nth-child(3) .usecase-badge {
+            background: #000;
+            color: #fff;
+        }
+
+        .usecase-card h4 {
+            font-size: 24px;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .usecase-card p {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials-section {
+            background: #b7c6c2;
+            padding: 4rem 2rem;
+            border-bottom: 2px solid #000;
+        }
+
+        .testimonials-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .testimonials-title {
+            font-size: 48px;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            font-family: 'Cabinet Grotesk', sans-serif;
+            text-align: center;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: #fff;
+            padding: 2rem;
+            border: 2px solid #000;
+        }
+
+        .testimonial-card:nth-child(1) {
+            border-radius: 48px 2px 48px 2px;
+        }
+
+        .testimonial-card:nth-child(2) {
+            border-radius: 2px 48px 2px 48px;
+        }
+
+        .testimonial-card:nth-child(3) {
+            border-radius: 48px 2px 2px 48px;
+        }
+
+        .stars {
+            color: #ffbc2e;
+            font-size: 14px;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-card p {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            color: #666;
+        }
+
+        .testimonial-author {
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #000;
+        }
+
+        /* ===== FINAL CTA ===== */
+        .final-cta {
+            background: #ffe17c;
+            border-bottom: 2px solid #000;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .final-cta h2 {
+            font-size: 48px;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+        }
+
+        .final-cta p {
+            font-size: 18px;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #171e19;
+            color: #b7c6c2;
+            padding: 3rem 2rem;
+            border-top: 2px solid #000;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-col h4 {
+            color: #fff;
+            margin-bottom: 1rem;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .footer-col a {
+            display: block;
+            color: #b7c6c2;
+            text-decoration: none;
+            font-size: 13px;
+            margin-bottom: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .footer-col a:hover {
+            color: #fff;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 12px;
+            margin-top: 1rem;
+        }
+
+        .social-icon {
+            width: 36px;
+            height: 36px;
+            border: 2px solid #272727;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .social-icon:hover {
+            background: #ffe17c;
+            border-color: #000;
+            color: #000;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #272727;
+            padding-top: 2rem;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .hero-container,
+            .pvs-container,
+            .features-grid,
+            .steps-flow,
+            .usecases-grid,
+            .testimonials-grid,
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+
+            .steps-flow::before {
+                display: none;
+            }
+
+            .hero-left h1 {
+                font-size: 40px;
+            }
+
+            .how-title,
+            .usecases-title,
+            .testimonials-title,
+            .final-cta h2 {
+                font-size: 32px;
+            }
+
+            nav {
+                height: auto;
+                flex-wrap: wrap;
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            nav-links {
+                display: none;
+            }
+
+            .hero {
+                margin-top: 0;
+                padding: 3rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">
+            <div class="logo-icon">⚡</div>
+            <span>awesome-nfc</span>
+        </div>
+        <nav-links>
+            <a href="#features">Features</a>
+            <a href="#how">How It Works</a>
+            <a href="#resources">Resources</a>
+            <a href="https://github.com/awesome-nfc/awesome-nfc">GitHub</a>
+        </nav-links>
+        <button class="btn-trial">Start Writing Tags</button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-left">
+                <div class="badge">NEW: Web NFC Creator 2.0</div>
+                <h1>
+                    Write <span class="highlight">NFC Tags</span> From Your Phone
+                </h1>
+                <p style="font-size: 16px; color: #333; margin-bottom: 1.5rem; line-height: 1.6;">
+                    The most comprehensive resource for NFC stickers, tags, and everything needed to master contactless technology. From beginner guides to advanced projects.
+                </p>
+                <div class="hero-cta">
+                    <button class="btn-primary">Open Web App</button>
+                    <button class="btn-secondary">View on GitHub</button>
+                </div>
+            </div>
+            <div class="browser-mockup">
+                <div class="browser-header">
+                    <div class="browser-dot dot-red"></div>
+                    <div class="browser-dot dot-yellow"></div>
+                    <div class="browser-dot dot-green"></div>
+                </div>
+                <div class="browser-content">
+                    <div class="chart-placeholder">
+                        <div style="font-weight: 700; margin-bottom: 1rem;">Revenue</div>
+                        <div class="chart-bar" style="width: 100%;"></div>
+                        <div class="chart-bar" style="width: 85%;"></div>
+                        <div class="chart-bar" style="width: 70%;"></div>
+                    </div>
+                    <div class="chart-placeholder">
+                        <div style="font-weight: 700; margin-bottom: 1rem;">Tags Written</div>
+                        <div class="chart-bar" style="width: 100%;"></div>
+                        <div class="chart-bar" style="width: 90%;"></div>
+                        <div class="chart-bar" style="width: 75%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof Marquee -->
+    <section class="marquee-section">
+        <div class="marquee">
+            <div class="marquee-item">ACME • GLOBEX • INITECH • CONTOSO • FABRIKAM • LITWARE • ADATUM • PROSEWARE • MARGIE'S TRAVEL • COHO VINEYARD • ACME • GLOBEX • INITECH • CONTOSO •</div>
+        </div>
+    </section>
+
+    <!-- Problem vs Solution -->
+    <section class="pvs-section">
+        <div class="pvs-container">
+            <div class="pvs-card problem-card">
+                <h3>❌ The Problem</h3>
+                <ul class="pvs-list">
+                    <li>Scattered NFC resources</li>
+                    <li>No clear learning path</li>
+                    <li>Limited project examples</li>
+                    <li>Hard to get started</li>
+                </ul>
+            </div>
+            <div class="pvs-card solution-card">
+                <h3>✅ Our Solution</h3>
+                <ul class="pvs-list">
+                    <li>One curated resource</li>
+                    <li>Beginner to advanced</li>
+                    <li>Real-world projects</li>
+                    <li>Web app included</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section class="features-section" id="features">
+        <div class="features-container">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>Comprehensive Guides</h3>
+                    <p>Beginner to advanced tutorials covering every aspect of NFC technology and implementation.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛠️</div>
+                    <h3>Developer Tools</h3>
+                    <p>Libraries, frameworks, and utilities for JavaScript, Python, Java, Swift, and C++.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Web Creator App</h3>
+                    <p>Write NFC tags directly from your browser. Works offline. No installation needed.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💡</div>
+                    <h3>Real Projects</h3>
+                    <p>Smart home automation, business cards, event check-ins, and creative use cases.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Security Deep Dive</h3>
+                    <p>Encryption, authentication, and best practices for secure NFC implementations.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Active Community</h3>
+                    <p>Join thousands of NFC enthusiasts sharing projects, tips, and discoveries.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-section" id="how">
+        <div class="how-container">
+            <h2 class="how-title">How It Works</h2>
+            <div class="steps-flow">
+                <div class="step">
+                    <div class="step-circle">1</div>
+                    <h4>Learn</h4>
+                    <p>Start with our beginner guide. Understand NFC basics, tag types, and use cases in 15 minutes.</p>
+                </div>
+                <div class="step">
+                    <div class="step-circle">2</div>
+                    <h4>Create</h4>
+                    <p>Use our web app or download a mobile app. Write your first tag with your phone.</p>
+                </div>
+                <div class="step">
+                    <div class="step-circle">3</div>
+                    <h4>Build</h4>
+                    <p>Explore real projects. Automate your home, build business cards, create smart experiences.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases -->
+    <section class="usecases-section">
+        <div class="usecases-container">
+            <h2 class="usecases-title">Who Uses Awesome NFC?</h2>
+            <div class="usecases-grid">
+                <div class="usecase-card">
+                    <span class="usecase-badge">MAKERS</span>
+                    <h4>Hobbyists & Makers</h4>
+                    <p>Build smart home projects, create interactive art installations, and experiment with cutting-edge tech.</p>
+                </div>
+                <div class="usecase-card">
+                    <span class="usecase-badge">DEVELOPERS</span>
+                    <h4>Full-Stack Developers</h4>
+                    <p>Integrate NFC into apps, build backends, and create seamless mobile experiences with our libraries.</p>
+                </div>
+                <div class="usecase-card">
+                    <span class="usecase-badge">BUSINESSES</span>
+                    <h4>Enterprise Leaders</h4>
+                    <p>Implement authentication, inventory tracking, and loyalty programs at scale with proven security.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials-section">
+        <div class="testimonials-container">
+            <h2 class="testimonials-title">What the Community Says</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"This is exactly what I needed to get started with NFC. The guides are crystal clear and the web app just works."</p>
+                    <div class="testimonial-author">Sarah Chen, IoT Developer</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Finally, a curated resource for NFC. No more searching 20 different blogs. Everything is here."</p>
+                    <div class="testimonial-author">Alex Rodriguez, Maker</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"The web app is incredible. My whole team uses it now for prototyping NFC features."</p>
+                    <div class="testimonial-author">Jordan Park, Startup CTO</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <h2>Ready to Master NFC?</h2>
+        <p>Join thousands of developers, makers, and innovators building the future with NFC technology.</p>
+        <button class="btn-primary">Start Writing Tags Now</button>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>🔗 Resources</h4>
+                <a href="#guides">Guides</a>
+                <a href="#libraries">Libraries</a>
+                <a href="#hardware">Hardware</a>
+                <a href="#projects">Projects</a>
+            </div>
+            <div class="footer-col">
+                <h4>📚 Learn</h4>
+                <a href="#getting-started">Getting Started</a>
+                <a href="#tutorials">Tutorials</a>
+                <a href="#standards">Standards</a>
+                <a href="#troubleshooting">Troubleshooting</a>
+            </div>
+            <div class="footer-col">
+                <h4>🤝 Community</h4>
+                <a href="https://reddit.com/r/nfc">Reddit</a>
+                <a href="https://github.com">GitHub</a>
+                <a href="#discussions">Discussions</a>
+                <a href="#contributing">Contributing</a>
+            </div>
+            <div class="footer-col">
+                <h4>🔗 Connect</h4>
+                <div class="social-icons">
+                    <div class="social-icon">𝕏</div>
+                    <div class="social-icon">🔗</div>
+                    <div class="social-icon">📧</div>
+                    <div class="social-icon">⭐</div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Awesome NFC. Made by the community, for the community. MIT License.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // CTA buttons
+        document.querySelectorAll('.btn-primary, .btn-trial').forEach(btn => {
+            btn.addEventListener('click', function() {
+                window.open('./web-app/index.html', '_blank');
+            });
+        });
+
+        document.querySelectorAll('.btn-secondary').forEach(btn => {
+            btn.addEventListener('click', function() {
+                window.open('https://github.com/awesome-nfc/awesome-nfc', '_blank');
+            });
+        });
+    </script>
+</body>
+</html>
