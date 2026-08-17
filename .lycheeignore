@@ -11,9 +11,6 @@
 ^https?://localhost
 ^https?://127\.0\.0\.1
 
-# Placeholder in the clone/remote instructions.
-YOUR_USERNAME
-
 # Cloudflare / bot protection. All verified live by hand.
 ^https?://(www\.)?reddit\.com
 ^https?://(www\.)?acs\.com\.hk

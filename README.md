@@ -29,7 +29,7 @@ Two platform notes sit separately, because the differences are annoying enough t
 
 The short version of all of it: buy a pack of NTAG215 stickers, install one of the apps below, choose "write", pick a record type, hold the phone against the sticker.
 
-There is also a browser-based writer in [`web/`](web/) that needs no install. It uses the Web NFC API, so it only works in Chrome or Edge on Android, and it needs a secure context. Serve it over HTTPS or from localhost:
+There is also a browser-based writer that needs no install: open [the hosted version](https://3liaf.github.io/awesome-nfc/web/) on an Android phone and write a tag from the browser. It uses the Web NFC API, so it only works in Chrome or Edge on Android, and it needs a secure context. To run the copy in [`web/`](web/) locally, serve it over HTTPS or from localhost:
 
 ```bash
 cd web && python -m http.server 8000
