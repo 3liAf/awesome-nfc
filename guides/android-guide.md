@@ -214,8 +214,8 @@ You now have a record of what's on that tag.
 
 ## Next Steps
 
-- **[Advanced Writing](./advanced-writing.md)** - Encryption, security
-- **[Your First Project](./your-first-project.md)** - Build something real
-- **[Android + IFTTT](./automation.md)** - Automate stuff on tap
+- **[Advanced Writing](../docs/WRITING_TO_NFC.md)** - Encryption, security
+- **[Your First Project](../docs/GETTING_STARTED.md)** - Build something real
+- **[Android + IFTTT](../README.md#projects-worth-stealing-ideas-from)** - Automate stuff on tap
 
 You're now an Android NFC master. Go forth and write tags!

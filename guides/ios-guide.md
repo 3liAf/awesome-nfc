@@ -170,8 +170,8 @@ To keep a record:
 
 ## Next Steps
 
-- **[Advanced Writing](./advanced-writing.md)** - Get deeper
-- **[Your First Project](./your-first-project.md)** - Build something real
-- **[Automation Guide](./automation.md)** - Make tapping do cool stuff
+- **[Advanced Writing](../docs/WRITING_TO_NFC.md)** - Get deeper
+- **[Your First Project](../docs/GETTING_STARTED.md)** - Build something real
+- **[Automation Guide](../README.md#projects-worth-stealing-ideas-from)** - Make tapping do cool stuff
 
 You're now an iPhone NFC expert!

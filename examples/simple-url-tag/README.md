@@ -28,7 +28,7 @@ The most basic NFC use case: write a URL to a tag, scan it, open in browser.
 
 ```javascript
 async function writePortfolioLink() {
-  const ndef = new NDEFWriter();
+  const ndef = new NDEFReader();
   await ndef.write({
     records: [{
       recordType: "url",

@@ -1,99 +1,92 @@
 #!/usr/bin/env python3
 """
-Simple NFC URL Tag Writer
-Write a URL to an NFC tag using nfcpy library
+Write a URL to an NFC tag using a USB reader.
 
 Requirements:
-    pip install nfcpy
+    pip install nfcpy ndeflib
 
 Usage:
-    python write-tag.py "https://example.com"
+    python write-tag.py https://example.com
 
-Works with:
-    - ACR122U USB NFC reader (~$30)
-    - Android phone via ADB/NDK
+Tested with an ACR122U. Any reader nfcpy supports should work.
+
+Note on versions: nfcpy 0.x had its own `nfc.ndef` module. It was removed in
+1.0 and record handling moved to the separate `ndeflib` package, which is what
+this script uses. Examples you find elsewhere that do `from nfc.ndef import
+UriRecord` are written against the old API and will fail on a current install.
 """
 
 import sys
+
 import nfc
-from nfc.ndef import UriRecord, Message
+import ndef
 
 
-def write_url_to_tag(clf, url):
-    """
-    Write a URL to an NFC tag
-
-    Args:
-        clf: NFC ContactlessFrontend object
-        url: URL string to write (e.g., "https://example.com")
-    """
-
-    # Ensure URL has protocol
-    if not url.startswith(("http://", "https://")):
-        url = "https://" + url
-
-    print(f"Writing: {url}")
-    print("Place tag on reader...")
+def make_on_connect(url):
+    """Build the callback nfcpy invokes once a tag is in the field."""
 
     def on_connect(tag):
-        """Callback when tag is detected"""
-        print(f"✓ Tag detected: {tag.type}")
+        print(f"Tag detected: {tag}")
 
+        if not tag.ndef:
+            print("  This tag is not NDEF formatted. Format it first, then retry.")
+            return False
+
+        if not tag.ndef.is_writeable:
+            print("  This tag is locked and cannot be written.")
+            return False
+
+        record = ndef.UriRecord(url)
+
+        # nfcpy encodes the message when the list is assigned, so a payload
+        # that is too large raises here rather than half-writing the tag.
         try:
-            # Create URI record
-            record = UriRecord(url)
+            tag.ndef.records = [record]
+        except ValueError as exc:
+            print(f"  Write rejected: {exc}")
+            print(f"  Tag capacity is {tag.ndef.capacity} bytes.")
+            return False
 
-            # Create NDEF message
-            message = Message(record)
+        print(f"  Written. Using {tag.ndef.length} of {tag.ndef.capacity} bytes.")
 
-            # Write to tag
-            tag.ndef.message = message
+        # Returning False makes connect() return immediately. Return True
+        # instead if you want it to block until the tag is pulled away.
+        return False
 
-            print(f"✓ Successfully written!")
-            print(f"  Tag type: {tag.type}")
-            print(f"  Data size: {len(message.to_bytes())} bytes")
-
-            return True  # Exit scan loop
-
-        except Exception as e:
-            print(f"✗ Write failed: {e}")
-            return True  # Exit scan loop
-
-    try:
-        # Connect to tag and write
-        clf.connect(rdwr={"on-connect": on_connect})
-
-    except nfc.clf.TargetLost:
-        print("✗ Tag lost contact. Try again.")
-    except nfc.clf.BrokenLink:
-        print("✗ Connection broken. Try again.")
-    except Exception as e:
-        print(f"✗ Error: {e}")
+    return on_connect
 
 
 def main():
-    """Main entry point"""
     if len(sys.argv) < 2:
         print("Usage: python write-tag.py <URL>")
-        print("Example: python write-tag.py 'https://example.com'")
-        sys.exit(1)
+        return 1
 
     url = sys.argv[1]
+    if not url.startswith(("http://", "https://")):
+        url = "https://" + url
 
-    # Find NFC reader
-    clf = nfc.ContactlessFrontend()
+    # 'usb' scans the USB bus. Pass something like 'tty:USB0:pn532' for a
+    # serial reader. This raises IOError if no reader is present.
+    try:
+        clf = nfc.ContactlessFrontend("usb")
+    except IOError:
+        print("No NFC reader found.")
+        print("Check the reader is plugged in and that you have permission to")
+        print("access it (on Linux this usually means a udev rule or sudo).")
+        return 1
 
-    if clf is None:
-        print("✗ No NFC reader found")
-        print("  Install nfcpy: pip install nfcpy")
-        print("  Get ACR122U: ~$30 on Amazon")
-        sys.exit(1)
+    print(f"Writing: {url}")
+    print("Place a tag on the reader...")
 
     try:
-        write_url_to_tag(clf, url)
+        clf.connect(rdwr={"on-connect": make_on_connect(url)})
+    except KeyboardInterrupt:
+        print("\nCancelled.")
     finally:
         clf.close()
 
+    return 0
+
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

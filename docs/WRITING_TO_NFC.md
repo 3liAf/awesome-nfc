@@ -112,7 +112,7 @@ python -m nfc write -u "https://example.com"
 
 ```python
 import nfc
-from nfc.ndef import TextRecord, UriRecord, Message
+import ndef
 
 def write_to_tag(clf, tag_data):
     def on_connect(tag):
@@ -120,21 +120,21 @@ def write_to_tag(clf, tag_data):
         
         # Create NDEF message
         if tag_data['type'] == 'url':
-            record = UriRecord(tag_data['value'])
+            record = ndef.UriRecord(tag_data['value'])
         elif tag_data['type'] == 'text':
-            record = TextRecord(tag_data['value'], language='en')
+            record = ndef.TextRecord(tag_data['value'], language='en')
         
-        message = Message(record)
+        records = [record]
         
         # Write to tag
-        tag.ndef.message = message
+        tag.ndef.records = records
         print("Written successfully")
         return True
     
     clf.connect(rdwr={'on-connect': on_connect})
 
 # Usage
-with nfc.ContactlessFrontend() as clf:
+with nfc.ContactlessFrontend('usb') as clf:
     write_to_tag(clf, {'type': 'url', 'value': 'https://example.com'})
 ```
 
@@ -223,14 +223,14 @@ END:VCALENDAR
 If you want to store your own format:
 
 ```python
-from nfc.ndef import Record, Message
+import ndef
 
 # Create custom record
-record = Record()
+record = ndef.Record()
 record.type = b'application/x-custom'
 record.data = b'your_data_here'
 
-message = Message(record)
+records = [record]
 ```
 
 **Use case examples:**
@@ -266,14 +266,14 @@ message = Message(record)
 pip install nfcpy
 python3 << 'EOF'
 import nfc
-from nfc.ndef import UriRecord, Message
+import ndef
 
-clf = nfc.ContactlessFrontend()
+clf = nfc.ContactlessFrontend('usb')
 print("Place tag on reader...")
 
 def on_connect(tag):
-    record = UriRecord("https://your-link.com")
-    tag.ndef.message = Message(record)
+    record = ndef.UriRecord("https://your-link.com")
+    tag.ndef.records = [record]
     print("✓ Written!")
     return True
 
@@ -286,7 +286,7 @@ EOF
 ```javascript
 const writeToTag = async (url) => {
   try {
-    const ndef = new NDEFWriter();
+    const ndef = new NDEFReader();
     await ndef.write({
       records: [{ recordType: "url", data: url }]
     });
@@ -398,8 +398,8 @@ Once data is on a tag, you can lock it so it can't be changed.
 def write_and_lock(clf, data):
     def on_connect(tag):
         # Write data
-        record = UriRecord(data['url'])
-        tag.ndef.message = Message(record)
+        record = ndef.UriRecord(data['url'])
+        tag.ndef.records = [record]
         
         # Lock it
         tag.ndef.records[0].flags = 0xF0

@@ -63,7 +63,7 @@
             font-weight: bold;
         }
 
-        nav-links {
+        .nav-links {
             display: flex;
             gap: 2rem;
             align-items: center;
@@ -774,7 +774,7 @@
                 gap: 1rem;
             }
 
-            nav-links {
+            .nav-links {
                 display: none;
             }
 
@@ -792,25 +792,25 @@
             <div class="logo-icon">⚡</div>
             <span>awesome-nfc</span>
         </div>
-        <nav-links>
+        <div class="nav-links">
             <a href="#features">Features</a>
             <a href="#how">How It Works</a>
-            <a href="#resources">Resources</a>
+            <a href="#projects">Projects</a>
             <a href="https://github.com/awesome-nfc/awesome-nfc">GitHub</a>
-        </nav-links>
-        <button class="btn-trial">Start Writing Tags</button>
+        </div>
+        <button class="btn-trial">Open the Writer</button>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-container">
             <div class="hero-left">
-                <div class="badge">NEW: Web NFC Creator 2.0</div>
+                <div class="badge">OPEN SOURCE &middot; MIT LICENSED</div>
                 <h1>
                     Write <span class="highlight">NFC Tags</span> From Your Phone
                 </h1>
                 <p style="font-size: 16px; color: #333; margin-bottom: 1.5rem; line-height: 1.6;">
-                    The most comprehensive resource for NFC stickers, tags, and everything needed to master contactless technology. From beginner guides to advanced projects.
+                    A curated list of NFC tools, libraries and hardware, plus guides that assume you have never touched a tag before. Includes a browser-based tag writer that needs no install.
                 </p>
                 <div class="hero-cta">
                     <button class="btn-primary">Open Web App</button>
@@ -823,18 +823,23 @@
                     <div class="browser-dot dot-yellow"></div>
                     <div class="browser-dot dot-green"></div>
                 </div>
-                <div class="browser-content">
-                    <div class="chart-placeholder">
-                        <div style="font-weight: 700; margin-bottom: 1rem;">Revenue</div>
-                        <div class="chart-bar" style="width: 100%;"></div>
-                        <div class="chart-bar" style="width: 85%;"></div>
-                        <div class="chart-bar" style="width: 70%;"></div>
-                    </div>
-                    <div class="chart-placeholder">
-                        <div style="font-weight: 700; margin-bottom: 1rem;">Tags Written</div>
-                        <div class="chart-bar" style="width: 100%;"></div>
-                        <div class="chart-bar" style="width: 90%;"></div>
-                        <div class="chart-bar" style="width: 75%;"></div>
+                <div class="browser-content" style="display:block; padding:1.5rem;">
+                    <div style="font-family:'Monaco','Courier New',monospace; font-size:12px; line-height:1.7;">
+                        <div style="background:#171e19; color:#b7c6c2; border:2px solid #000; padding:12px; margin-bottom:12px;">
+                            <div style="color:#ffe17c; font-weight:700; margin-bottom:6px;">NDEF MESSAGE &mdash; NTAG215</div>
+                            <div>record[0] type=U &nbsp;uri=https://example.com</div>
+                            <div>record[1] type=T &nbsp;lang=en text="hello"</div>
+                        </div>
+                        <div style="display:flex; gap:12px;">
+                            <div style="flex:1; background:#b7c6c2; border:2px solid #000; padding:12px;">
+                                <div style="font-weight:700; font-size:11px;">USED</div>
+                                <div style="font-size:20px; font-weight:700;">61 B</div>
+                            </div>
+                            <div style="flex:1; background:#ffe17c; border:2px solid #000; padding:12px;">
+                                <div style="font-weight:700; font-size:11px;">FREE</div>
+                                <div style="font-size:20px; font-weight:700;">431 B</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -844,7 +849,7 @@
     <!-- Social Proof Marquee -->
     <section class="marquee-section">
         <div class="marquee">
-            <div class="marquee-item">ACME • GLOBEX • INITECH • CONTOSO • FABRIKAM • LITWARE • ADATUM • PROSEWARE • MARGIE'S TRAVEL • COHO VINEYARD • ACME • GLOBEX • INITECH • CONTOSO •</div>
+            <div class="marquee-item">NTAG213 • NTAG215 • NTAG216 • MIFARE ULTRALIGHT • MIFARE CLASSIC • DESFIRE EV3 • ISO 14443-A • ISO 18092 • NDEF • FELICA • PN532 • ACR122U • PROXMARK3 • NTAG213 • NTAG215 • NTAG216 • MIFARE ULTRALIGHT • MIFARE CLASSIC • DESFIRE EV3 • ISO 14443-A • ISO 18092 • NDEF • FELICA • PN532 • ACR122U • PROXMARK3 •</div>
         </div>
     </section>
 
@@ -935,7 +940,7 @@
     </section>
 
     <!-- Use Cases -->
-    <section class="usecases-section">
+    <section class="usecases-section" id="projects">
         <div class="usecases-container">
             <h2 class="usecases-title">Who Uses Awesome NFC?</h2>
             <div class="usecases-grid">
@@ -961,22 +966,22 @@
     <!-- Testimonials -->
     <section class="testimonials-section">
         <div class="testimonials-container">
-            <h2 class="testimonials-title">What the Community Says</h2>
+            <h2 class="testimonials-title">Built With NFC Tags</h2>
             <div class="testimonials-grid">
                 <div class="testimonial-card">
-                    <div class="stars">★★★★★</div>
-                    <p>"This is exactly what I needed to get started with NFC. The guides are crystal clear and the web app just works."</p>
-                    <div class="testimonial-author">Sarah Chen, IoT Developer</div>
+                    <h4 style="margin-bottom:0.75rem;">tagreader</h4>
+                    <p>A wall-mounted NFC reader that talks to Home Assistant. One of the tidiest open hardware builds around.</p>
+                    <a class="testimonial-author" style="text-decoration:none;" href="https://github.com/adonno/tagreader">github.com/adonno/tagreader →</a>
                 </div>
                 <div class="testimonial-card">
-                    <div class="stars">★★★★★</div>
-                    <p>"Finally, a curated resource for NFC. No more searching 20 different blogs. Everything is here."</p>
-                    <div class="testimonial-author">Alex Rodriguez, Maker</div>
+                    <h4 style="margin-bottom:0.75rem;">foqos</h4>
+                    <p>Locks you out of distracting apps until you physically tap a tag. A tag used as a commitment device.</p>
+                    <a class="testimonial-author" style="text-decoration:none;" href="https://github.com/awaseem/foqos">github.com/awaseem/foqos →</a>
                 </div>
                 <div class="testimonial-card">
-                    <div class="stars">★★★★★</div>
-                    <p>"The web app is incredible. My whole team uses it now for prototyping NFC features."</p>
-                    <div class="testimonial-author">Jordan Park, Startup CTO</div>
+                    <h4 style="margin-bottom:0.75rem;">OpenSpool</h4>
+                    <p>Tags 3D printer filament so the printer knows what is loaded without anyone typing it in.</p>
+                    <a class="testimonial-author" style="text-decoration:none;" href="https://github.com/spuder/OpenSpool">github.com/spuder/OpenSpool →</a>
                 </div>
             </div>
         </div>
@@ -994,24 +999,24 @@
         <div class="footer-container">
             <div class="footer-col">
                 <h4>🔗 Resources</h4>
-                <a href="#guides">Guides</a>
-                <a href="#libraries">Libraries</a>
-                <a href="#hardware">Hardware</a>
+                <a href="./docs/GETTING_STARTED.md">Guides</a>
+                <a href="./README.md#libraries">Libraries</a>
+                <a href="./README.md#hardware">Hardware</a>
                 <a href="#projects">Projects</a>
             </div>
             <div class="footer-col">
                 <h4>📚 Learn</h4>
-                <a href="#getting-started">Getting Started</a>
-                <a href="#tutorials">Tutorials</a>
-                <a href="#standards">Standards</a>
-                <a href="#troubleshooting">Troubleshooting</a>
+                <a href="./docs/GETTING_STARTED.md">Getting Started</a>
+                <a href="./docs/WRITING_TO_NFC.md">Tutorials</a>
+                <a href="./README.md#specifications">Standards</a>
+                <a href="./docs/WRITING_TO_NFC.md">Troubleshooting</a>
             </div>
             <div class="footer-col">
                 <h4>🤝 Community</h4>
                 <a href="https://reddit.com/r/nfc">Reddit</a>
                 <a href="https://github.com">GitHub</a>
-                <a href="#discussions">Discussions</a>
-                <a href="#contributing">Contributing</a>
+                <a href="./README.md#community">Discussions</a>
+                <a href="./CONTRIBUTING.md">Contributing</a>
             </div>
             <div class="footer-col">
                 <h4>🔗 Connect</h4>
@@ -1043,7 +1048,7 @@
         // CTA buttons
         document.querySelectorAll('.btn-primary, .btn-trial').forEach(btn => {
             btn.addEventListener('click', function() {
-                window.open('./web-app/index.html', '_blank');
+                window.open('./web/index.html', '_blank');
             });
         });
 

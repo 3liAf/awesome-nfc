@@ -182,7 +182,7 @@ Now that you understand the basics:
 
 - [NFC Formats Explained](./NFC_FORMATS.md) - NDEF records, standards, technical stuff
 - [Writing to NFC Complete Guide](./WRITING_TO_NFC.md) - Everything about writing data
-- [NFC Tag Types](./TAG_TYPES.md) - Different chip types and when to use each
+- [NFC Tag Types](../README.md#tag-types) - Different chip types and when to use each
 
 **If you want to code:**
 

@@ -1,97 +1,94 @@
 /**
- * Simple NFC URL Tag Writer
- * Write a URL to an NFC tag using Web NFC API
+ * Write a URL to an NFC tag from the browser, using the Web NFC API.
  *
  * Requirements:
- * - Android phone with Chrome/Edge
- * - NTAG 215 sticker or similar
- * - NFC enabled
+ *   - Android, Chrome or Edge. Web NFC is not available on iOS, desktop, or
+ *     Firefox, and there is no polyfill because it needs platform NFC access.
+ *   - A secure context: https:// or localhost. It will not run over plain http.
+ *   - The call must happen inside a user gesture (a click), otherwise the
+ *     permission prompt is suppressed.
+ *
+ * A note on the API name: early drafts had a separate NDEFWriter class. It was
+ * removed before Web NFC shipped. Reading and writing both go through
+ * NDEFReader now. Older tutorials still show `new NDEFWriter()`, which throws
+ * a ReferenceError in current Chrome.
  */
 
-async function writeURLToTag(url) {
+function isWebNfcAvailable() {
+  return typeof window !== "undefined" && "NDEFReader" in window;
+}
+
+async function writeUrlToTag(url) {
+  if (!isWebNfcAvailable()) {
+    return { ok: false, message: "Web NFC is unavailable. Use Chrome or Edge on Android." };
+  }
+
+  if (!/^https?:\/\//i.test(url)) {
+    url = "https://" + url;
+  }
+
   try {
-    // Validate URL
-    if (!url.match(/^https?:\/\//)) {
-      url = "https://" + url;
-    }
-
-    console.log("Writing:", url);
-
-    // Create NFC writer and write the URL
-    const ndef = new NDEFWriter();
-    await ndef.write({
-      records: [{
-        recordType: "url",
-        data: url
-      }]
-    });
-
-    console.log("✓ Successfully written to tag!");
-    return { success: true, message: "Tag written successfully" };
-
+    const ndef = new NDEFReader();
+    await ndef.write({ records: [{ recordType: "url", data: url }] });
+    return { ok: true, message: `Wrote ${url}` };
   } catch (error) {
-    console.error("✗ Write failed:", error);
-
-    // Provide helpful error messages
-    let message = error.message;
-    if (error.name === "NotSupportedError") {
-      message = "NFC not supported. Please use Android with Chrome/Edge.";
-    } else if (error.name === "NotAllowedError") {
-      message = "NFC permission denied. Make sure NFC is enabled in settings.";
-    } else if (error.name === "InvalidStateError") {
-      message = "Tag write failed. Try again, keeping the tag close and still.";
-    }
-
-    return { success: false, message: message };
+    return { ok: false, message: describeError(error) };
   }
 }
 
-// Example usage
-async function main() {
-  // Write your portfolio URL
-  const result = await writeURLToTag("https://yoursite.com");
-
-  if (result.success) {
-    console.log(result.message);
-  } else {
-    console.error(result.message);
+function describeError(error) {
+  switch (error.name) {
+    case "NotAllowedError":
+      // Also fires when the user dismisses the permission sheet.
+      return "Permission denied, or NFC is switched off in system settings.";
+    case "NotSupportedError":
+      return "No NFC hardware available on this device.";
+    case "NotReadableError":
+      return "NFC is enabled but the tag could not be accessed. Try again.";
+    case "NetworkError":
+      // This is what Chrome throws for a tag that is full, locked, or pulled
+      // away mid-write, which makes it the one you will actually hit.
+      return "Transfer failed. The tag may be locked, too small, or moved too soon.";
+    case "AbortError":
+      return "Cancelled.";
+    default:
+      return error.message || String(error);
   }
 }
 
-// HTML form integration example
+/**
+ * Wire the function to a form. Note the click handler: the write has to be
+ * triggered by a real user gesture.
+ */
 function setupForm() {
-  const form = document.getElementById("nfc-form");
   const input = document.getElementById("url-input");
   const button = document.getElementById("write-btn");
+  const status = document.getElementById("status");
+
+  if (!isWebNfcAvailable()) {
+    button.disabled = true;
+    status.textContent = "Web NFC is unavailable in this browser.";
+    return;
+  }
 
   button.addEventListener("click", async () => {
     const url = input.value.trim();
-
     if (!url) {
-      alert("Please enter a URL");
+      status.textContent = "Enter a URL first.";
       return;
     }
 
     button.disabled = true;
-    button.textContent = "Writing...";
+    status.textContent = "Hold a tag against the back of the phone...";
 
-    const result = await writeURLToTag(url);
+    const result = await writeUrlToTag(url);
 
     button.disabled = false;
-    button.textContent = "Write to Tag";
-
-    if (result.success) {
-      alert(result.message);
-      input.value = "";
-    } else {
-      alert("Error: " + result.message);
-    }
+    status.textContent = result.message;
+    if (result.ok) input.value = "";
   });
 }
 
-// Check if Web NFC is available
-if ("NDEFReader" in window) {
-  console.log("✓ Web NFC supported");
-} else {
-  console.warn("✗ Web NFC not supported. Use Android with Chrome/Edge.");
+if (typeof module !== "undefined") {
+  module.exports = { writeUrlToTag, isWebNfcAvailable };
 }

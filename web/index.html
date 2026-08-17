@@ -502,8 +502,9 @@
                         });
 
                         records.push({
-                            recordType: 'text/vcard',
-                            data: vcard
+                            recordType: 'mime',
+                            mediaType: 'text/vcard',
+                            data: new TextEncoder().encode(vcard)
                         });
                         break;
 
@@ -514,16 +515,11 @@
                             return;
                         }
 
-                        const wifiStr = buildWiFiString({
+                        records.push(buildWiFiRecord({
                             ssid: ssid,
                             password: document.getElementById('wifiPassword').value,
                             security: document.getElementById('wifiSecurity').value
-                        });
-
-                        records.push({
-                            recordType: 'text',
-                            data: wifiStr
-                        });
+                        }));
                         break;
 
                     case 'custom':
@@ -548,12 +544,19 @@
                 btn.disabled = true;
                 btn.innerHTML = '<span class="spinner"></span>Waiting for tag...';
 
-                // Write to tag
-                const ndef = new NDEFWriter();
+                // NDEFWriter was an early-draft name that Chrome removed before
+                // shipping. Reading and writing both go through NDEFReader now.
+                const ndef = new NDEFReader();
                 await ndef.write({records: records});
 
-                // If we get here, write was successful
-                showStatus('✓ Successfully written to tag!', 'success');
+                if (readOnly) {
+                    // Permanent. Sets the tag's lock bits; there is no undo.
+                    await ndef.makeReadOnly();
+                    showStatus('✓ Written and permanently locked', 'success');
+                } else {
+                    showStatus('✓ Successfully written to tag!', 'success');
+                }
+
                 btn.disabled = false;
                 btn.innerHTML = '📍 Write to Tag';
 
@@ -575,22 +578,78 @@
             }
         }
 
+        // vCard 3.0 requires CRLF line endings (RFC 6350). Android's contact
+        // importer is forgiving about LF, iOS is not.
         function buildVCard(contact) {
-            let vcard = `BEGIN:VCARD\nVERSION:3.0\n`;
-            vcard += `FN:${contact.name}\n`;
-            if (contact.phone) vcard += `TEL:${contact.phone}\n`;
-            if (contact.email) vcard += `EMAIL:${contact.email}\n`;
-            if (contact.org) vcard += `ORG:${contact.org}\n`;
-            vcard += `END:VCARD`;
-            return vcard;
+            const lines = ['BEGIN:VCARD', 'VERSION:3.0', `FN:${contact.name}`];
+            if (contact.phone) lines.push(`TEL:${contact.phone}`);
+            if (contact.email) lines.push(`EMAIL:${contact.email}`);
+            if (contact.org) lines.push(`ORG:${contact.org}`);
+            lines.push('END:VCARD');
+            return lines.join('\r\n');
         }
 
-        function buildWiFiString(wifi) {
-            let str = `WIFI:T:${wifi.security}`;
-            str += `;S:${wifi.ssid}`;
-            if (wifi.password) str += `;P:${wifi.password}`;
-            str += `;;`;
-            return str;
+        // Wi-Fi Simple Configuration credential record.
+        //
+        // Writing the "WIFI:S:...;T:...;P:...;;" string that QR codes use does NOT
+        // make Android offer to join a network — that format is only understood by
+        // camera/QR scanners. Over NFC, Android looks for a WPS credential record
+        // with MIME type application/vnd.wfa.wsc, which is a sequence of
+        // big-endian TLVs (2-byte type, 2-byte length, value).
+        //
+        // Spec: Wi-Fi Simple Configuration Technical Specification v2.0.5, table 32.
+        const WPS = {
+            CREDENTIAL: 0x100e,
+            NETWORK_INDEX: 0x1026,
+            SSID: 0x1045,
+            AUTH_TYPE: 0x1003,
+            ENCRYPT_TYPE: 0x100f,
+            NETWORK_KEY: 0x1027
+        };
+
+        const WPS_AUTH = { nopass: 0x0001, WEP: 0x0001, WPA: 0x0020, WPA2: 0x0020 };
+        const WPS_ENCRYPT = { nopass: 0x0001, WEP: 0x0002, WPA: 0x0008, WPA2: 0x0008 };
+
+        function wpsTlv(type, valueBytes) {
+            const out = new Uint8Array(4 + valueBytes.length);
+            out[0] = type >> 8;
+            out[1] = type & 0xff;
+            out[2] = valueBytes.length >> 8;
+            out[3] = valueBytes.length & 0xff;
+            out.set(valueBytes, 4);
+            return out;
+        }
+
+        function concatBytes(chunks) {
+            const total = chunks.reduce((n, c) => n + c.length, 0);
+            const out = new Uint8Array(total);
+            let offset = 0;
+            for (const c of chunks) {
+                out.set(c, offset);
+                offset += c.length;
+            }
+            return out;
+        }
+
+        function buildWiFiRecord(wifi) {
+            const enc = new TextEncoder();
+            const auth = WPS_AUTH[wifi.security] ?? WPS_AUTH.WPA2;
+            const cipher = WPS_ENCRYPT[wifi.security] ?? WPS_ENCRYPT.WPA2;
+            const open = wifi.security === 'nopass';
+
+            const inner = [
+                wpsTlv(WPS.NETWORK_INDEX, new Uint8Array([1])),
+                wpsTlv(WPS.SSID, enc.encode(wifi.ssid)),
+                wpsTlv(WPS.AUTH_TYPE, new Uint8Array([auth >> 8, auth & 0xff])),
+                wpsTlv(WPS.ENCRYPT_TYPE, new Uint8Array([cipher >> 8, cipher & 0xff])),
+                wpsTlv(WPS.NETWORK_KEY, enc.encode(open ? '' : (wifi.password || '')))
+            ];
+
+            return {
+                recordType: 'mime',
+                mediaType: 'application/vnd.wfa.wsc',
+                data: wpsTlv(WPS.CREDENTIAL, concatBytes(inner))
+            };
         }
 
         function showStatus(message, type) {

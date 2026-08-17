@@ -368,28 +368,28 @@ const message = {
 };
 
 // Write to tag
-const writer = new NDEFWriter();
+const writer = new NDEFReader();
 await writer.write(message);
 ```
 
 ### Python
 
 ```python
-from nfc.ndef import UriRecord, TextRecord, Message
+import ndef
 
 # URL record
-url_record = UriRecord("https://example.com")
+url_record = ndef.UriRecord("https://example.com")
 
 # Text record
-text_record = TextRecord("Hello World", language="en")
+text_record = ndef.TextRecord("Hello World", language="en")
 
 # Create message
-message = Message(url_record, text_record)
+records = [url_record, text_record]
 
 # Write via nfc library
 import nfc
-clf = nfc.ContactlessFrontend()
-clf.connect(rdwr={'on-connect': lambda tag: tag.ndef.write(message)})
+clf = nfc.ContactlessFrontend('usb')   # 'usb' scans the USB bus for a reader
+clf.connect(rdwr={'on-connect': lambda tag: setattr(tag.ndef, 'records', records)})
 ```
 
 ### Raw Hex
@@ -431,7 +431,7 @@ const customRecord = {
 };
 
 // Write it
-const writer = new NDEFWriter();
+const writer = new NDEFReader();
 await writer.write({ records: [customRecord] });
 
 // Your app reads it back
