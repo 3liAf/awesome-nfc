@@ -1,0 +1,76 @@
+name: Suggest a resource
+description: Propose a library, tool, project or guide for the list
+title: "[Suggestion] "
+labels: ["suggestion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A pull request editing `README.md` directly is usually faster than an
+        issue. Use this form if you would rather someone else write the entry,
+        or if you are not sure the thing fits.
+
+  - type: input
+    id: link
+    attributes:
+      label: Link
+      placeholder: https://github.com/owner/repo
+    validations:
+      required: true
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What does it do?
+      description: >-
+        One or two sentences describing what it is, not why it is good. The
+        entry in the list will be roughly this text.
+      placeholder: Reads and writes MIFARE DESFire tags from Android.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: section
+    attributes:
+      label: Which section does it belong in?
+      options:
+        - Libraries
+        - Mobile apps
+        - Desktop and CLI tools
+        - Hardware
+        - Embedded and microcontrollers
+        - Projects worth stealing ideas from
+        - Security research
+        - Learning
+        - Not sure
+    validations:
+      required: true
+
+  - type: input
+    id: activity
+    attributes:
+      label: Last meaningful activity
+      description: >-
+        Roughly when it was last updated. Dormant projects are still accepted
+        when nothing better exists, but the entry has to say so.
+      placeholder: "Last commit 2026-03, or: archived in 2021"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: The link works and is not a shortener, referral or affiliate link
+          required: true
+        - label: It is not already in the list
+          required: true
+        - label: If this is my own project, I have said so below
+          required: false
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else
+      description: Optional. Say here if it is your own project.

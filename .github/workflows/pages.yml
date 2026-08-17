@@ -1,0 +1,56 @@
+name: Deploy to GitHub Pages
+
+# Publishes the landing page (index.html) and the tag writer (web/) over HTTPS.
+#
+# The HTTPS part is the whole point rather than a nicety: Web NFC is only
+# exposed to secure contexts, so the writer cannot work from a file:// path or
+# over plain http. Pages is the cheapest way to give it an origin it will
+# actually run on.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'web/**'
+      - '.nojekyll'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let a running deploy finish rather than cancelling it, so the live site is
+# never left half-published.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/configure-pages@v5
+
+      - name: Stage the site
+        # Only the two things that are actually a website. Shipping the whole
+        # repo would publish the markdown as raw files for no reason.
+        run: |
+          mkdir -p _site/web
+          cp index.html _site/
+          cp -r web/. _site/web/
+          touch _site/.nojekyll
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

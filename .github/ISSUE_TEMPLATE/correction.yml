@@ -1,0 +1,51 @@
+name: Report something wrong
+description: A dead link, an inaccurate description, or a code sample that no longer runs
+title: "[Fix] "
+labels: ["correction"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Corrections are more useful than additions. Thanks for taking the time.
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of problem?
+      options:
+        - Dead or redirected link
+        - Description is inaccurate or out of date
+        - Code sample does not run
+        - Project is archived and not labelled as such
+        - Something else
+    validations:
+      required: true
+
+  - type: input
+    id: where
+    attributes:
+      label: Where
+      description: File and section, or the entry itself.
+      placeholder: README.md, Libraries > Python
+    validations:
+      required: true
+
+  - type: textarea
+    id: detail
+    attributes:
+      label: What is wrong
+      description: >-
+        For code samples, paste the error. Library APIs change and the exact
+        message usually identifies which version broke it.
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: >-
+        Only for code samples or the web app. Library version, OS, browser,
+        phone, and the chip you were writing to.
+      placeholder: |
+        nfcpy 1.0.4, Python 3.12, Ubuntu 24.04, ACR122U, NTAG215

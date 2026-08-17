@@ -1,0 +1,30 @@
+name: awesome-lint
+
+# sindresorhus/awesome requires a list to pass awesome-lint before it will be
+# accepted. Running it on every change means the submission is not blocked on
+# fixing a backlog of formatting complaints later.
+
+on:
+  push:
+    paths:
+      - 'README.md'
+      - '.github/workflows/awesome-lint.yml'
+  pull_request:
+    paths:
+      - 'README.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npx awesome-lint

@@ -1,0 +1,56 @@
+name: Link check
+
+# A list is only as good as its links. This runs weekly rather than only on
+# push, because the usual failure is a repository being deleted or renamed
+# months after it was added, which no amount of review at merge time catches.
+
+on:
+  push:
+    paths:
+      - '**.md'
+      - '.github/workflows/link-check.yml'
+      - '.lycheeignore'
+  pull_request:
+    paths:
+      - '**.md'
+  schedule:
+    # Mondays, 06:00 UTC
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  lychee:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check links
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          # --max-concurrency keeps us under rate limits on github.com.
+          # A browser user agent avoids a chunk of the bot blocking that
+          # otherwise shows up as false failures.
+          args: >-
+            --no-progress
+            --max-concurrency 8
+            --timeout 20
+            --retry-wait-time 10
+            --max-retries 3
+            --accept 200,206,403,429
+            --user-agent "Mozilla/5.0 (compatible; awesome-nfc link check)"
+            './**/*.md'
+          fail: false
+          output: lychee-report.md
+
+      - name: Open an issue if anything broke
+        if: env.lychee_exit_code != '0'
+        uses: peter-evans/create-issue-from-file@v5
+        with:
+          title: Link check found dead links
+          content-filepath: lychee-report.md
+          labels: dead-link

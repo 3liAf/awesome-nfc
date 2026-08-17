@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: NFC question, not a problem with this list
+    url: https://stackoverflow.com/questions/tagged/nfc
+    about: >-
+      Questions about making a tag work, choosing a chip, or debugging your own
+      code are better asked here or on the Proxmark forum. This tracker is for
+      the contents of the list itself.
+  - name: Proxmark forum
+    url: http://www.proxmark.org/forum/
+    about: Deep protocol, reader hardware and card security discussion.
