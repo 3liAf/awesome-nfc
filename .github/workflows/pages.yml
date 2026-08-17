@@ -37,12 +37,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Pages must already be enabled under Settings > Pages > Source > GitHub
+      # Actions. The enablement: true option cannot substitute for that here:
+      # creating a Pages site through the API needs admin scope, which the
+      # workflow token does not have, and it fails with "Resource not
+      # accessible by integration".
       - uses: actions/configure-pages@v5
-        with:
-          # Turns Pages on if it has not been enabled in Settings yet. Without
-          # this the step fails with "Get Pages site failed" on a repo that has
-          # never had Pages configured, which is the state every new repo is in.
-          enablement: true
 
       - name: Stage the site
         # Only the two things that are actually a website. Shipping the whole
