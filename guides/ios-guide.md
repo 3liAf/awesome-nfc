@@ -1,4 +1,4 @@
-﻿# iPhone NFC Guide
+# iPhone NFC Guide
 
 NFC on iPhone got the green light starting with iOS 13. If you're running iOS 13 or later, you can read and write NFC tags. Here's how.
 
@@ -145,18 +145,27 @@ This doesn't mean it's broken. It just means Android is faster.
 
 If you're on iOS 13 with an XS, you can read but not write. Upgrade to iOS 14+ to write.
 
-## Automating Tap Actions
+## Automating Tap Actions (Shortcuts Ideas)
 
-Once you write a tag, you can create automations:
+Once you write a tag, or simply use an empty tag as a trigger, you can create powerful automations. The tag itself doesn't need data; iOS just recognizes its unique ID to run a local shortcut.
 
 1. **Shortcuts app** → **Automation** (tab)
-2. **"Create Personal Automation"**
-3. **"NFC"**
-4. **"Select a tag"** (tap your tag)
-5. Choose your action (open URL, send message, etc.)
-6. Confirm
+2. **"+" (Create Personal Automation)**
+3. Scroll down to **"NFC"**
+4. Tap **"Scan"** and hold your phone to the tag to register it. Give it a name.
+5. Tap **"Next"** and choose your actions.
+6. **Important:** Turn off "Ask Before Running" so it runs seamlessly when you tap.
 
-Now when someone taps your tag, the automation runs.
+### Cool iPhone Shortcut Ideas:
+
+- **The "Bedtime" Tag:** Stick a tag on your nightstand. Tapping it sets your alarms, turns on Do Not Disturb, dims smart lights, and starts a sleep playlist.
+- **The "Car Mode" Tag:** Put one on your dashboard. Tapping it opens Maps with directions home, resumes your favorite podcast, and sends a text to your partner saying you're on the way.
+- **The "Gym Tracker" Tag:** Stick one on your water bottle. Tapping it logs your water intake in Apple Health or opens your workout tracking app.
+- **The "Guest WiFi" Tag:** (Without writing WiFi data directly) Have the tag trigger a shortcut that displays a QR code on your screen with your guest WiFi credentials for friends to scan.
+- **The "Focus Timer" Tag:** Stick one on your desk. Tapping it starts a 25-minute Pomodoro timer and enables a "Work" Focus mode.
+- **The "Medication" Tag:** Put a tag on your pillbox. Tapping it logs that you took your medication in the Health app.
+
+Now when you tap your tag, the automation runs instantly on your phone.
 
 ## Backing Up Your Tags
 
