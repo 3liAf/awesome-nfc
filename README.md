@@ -182,6 +182,10 @@ Tag types 1 through 5 are NFC Forum categories, not chip names. NTAG213, NTAG215
 - [Dangerous Things forum](https://forum.dangerousthings.com/) - Implants, but a lot of general tag knowledge too.
 - [NFC on Stack Overflow](https://stackoverflow.com/questions/tagged/nfc) - For programming questions.
 
+## See also
+
+- [awesome-iot](https://github.com/HQarroum/awesome-iot) - Broader list of Internet of Things projects and resources. NFC sits inside it as one section.
+
 ## Contributing
 
 Suggestions are welcome. See [the contributing guide](CONTRIBUTING.md). The main rule is that links must be live and projects must be either maintained or explicitly labelled as not.
