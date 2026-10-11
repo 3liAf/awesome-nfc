@@ -20,6 +20,7 @@ Every link here has been checked, and a scheduled job rechecks them weekly. Proj
 - [Specifications](#specifications)
 - [Learning](#learning)
 - [Community](#community)
+- [See also](#see-also)
 
 ## Guides in this repository
 
@@ -181,6 +182,10 @@ Tag types 1 through 5 are NFC Forum categories, not chip names. NTAG213, NTAG215
 - [Proxmark forum](http://www.proxmark.org/forum/) - Where most of the deep protocol discussion happens.
 - [Dangerous Things forum](https://forum.dangerousthings.com/) - Implants, but a lot of general tag knowledge too.
 - [NFC on Stack Overflow](https://stackoverflow.com/questions/tagged/nfc) - For programming questions.
+
+## See also
+
+- [awesome-iot](https://github.com/HQarroum/awesome-iot) - Broader list of Internet of Things projects and resources. NFC sits inside it as one section.
 
 ## Contributing
 
