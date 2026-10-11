@@ -20,6 +20,7 @@ Every link here has been checked, and a scheduled job rechecks them weekly. Proj
 - [Specifications](#specifications)
 - [Learning](#learning)
 - [Community](#community)
+- [See also](#see-also)
 
 ## Guides in this repository
 
