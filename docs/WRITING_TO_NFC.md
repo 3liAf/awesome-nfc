@@ -32,14 +32,14 @@ You need **either** of these:
 NTAG 215 stickers, 10-pack for $5-8 online.
 
 **Why NTAG 215?**
-- 180 bytes of usable memory
+- ~488 bytes of usable memory for a single short-URL record (less for multi-record payloads)
 - ~$0.30 each in bulk
 - Write protection available
 - Works with everything
 - Stickers are convenient
 
 Other options:
-- **NTAG 216**: 888 bytes, if you need more space
+- **NTAG 216**: ~868 bytes, if you need more space
 - **Mifare Classic**: Older, smaller, cheaper but deprecated
 - **NTAG I²C Plus**: Has I²C for sensors, overkill unless you need it
 
@@ -349,7 +349,7 @@ iOS limitation. Apple only allows reading with CoreNFC until iOS 16, and writing
 
 Common causes:
 - Wrong NDEF format
-- Too much data (over 180 bytes for NTAG 215)
+- Too much data (over ~488 bytes for a single record; much less if you have multiple records on NTAG 215)
 - Encoding issue (special characters)
 
 **Fix:**
@@ -359,18 +359,20 @@ Common causes:
 
 ## Memory & Sizing
 
+NTAG 215 has 504 bytes of total user memory (pages 4-129). How much of that is usable for NDEF depends on your record layout. The figures below match [NFC_FORMATS.md](./NFC_FORMATS.md#memory--sizing) and the NXP NTAG215 datasheet.
+
 ### NTAG 215 Layout
 
 ```
 Block 0-1:   Serial + UID (7 bytes)
 Block 2:     OTP (locked)
 Block 3-4:   CC (Capability Container)
-Block 5-45:  NDEF Data (180 bytes usable)
-Block 46-48: Lock bits
-Block 49-63: Config & factory data
+Block 5-129: NDEF Data (up to ~488 bytes usable for a single short-URI record)
+Block 130-132: Lock bits
+Block 133-159: Config & factory data
 ```
 
-**Usable space: 180 bytes**
+**Usable space: ~488 bytes for a single short-URI record.** Multi-record or text-heavy payloads reduce this because each record adds TLV overhead (NDEF Message header + per-record header + terminator). See [NFC_FORMATS.md](./NFC_FORMATS.md#memory--sizing) for a worked example.
 
 Examples of how much that is:
 - URL "https://example.com/path?param=value": ~45 bytes ✓ fits easily

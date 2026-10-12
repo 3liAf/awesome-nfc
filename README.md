@@ -38,13 +38,13 @@ cd web && python -m http.server 8000
 
 ## Tag types
 
-Practical differences between the chips you will actually encounter. Usable bytes are lower than raw memory because NDEF has overhead.
+Practical differences between the chips you will actually encounter. Usable bytes are lower than raw memory because NDEF has overhead. NTAG numbers below assume a single short-URI record (the common case); multi-record or text-heavy payloads reduce usable space due to per-record TLV overhead. See [docs/NFC_FORMATS.md](./docs/NFC_FORMATS.md#memory--sizing) for details.
 
 | Chip                       | Usable NDEF | Notes                                                     |
 | -------------------------- | ----------- | --------------------------------------------------------- |
-| NTAG213                    | ~132 bytes  | Cheapest. Fine for short URLs.                            |
-| NTAG215                    | ~492 bytes  | The sensible default. What Amiibo use.                    |
-| NTAG216                    | ~872 bytes  | Buy if you are writing vCards or long payloads.           |
+| NTAG213                    | ~137 bytes  | Cheapest. Fine for short URLs.                            |
+| NTAG215                    | ~488 bytes  | The sensible default. What Amiibo use.                    |
+| NTAG216                    | ~868 bytes  | Buy if you are writing vCards or long payloads.           |
 | MIFARE Ultralight          | ~46 bytes   | Common in transit tickets. Tight.                         |
 | MIFARE Classic 1K          | ~716 bytes  | Broken crypto. iPhones cannot read it at all.             |
 | MIFARE DESFire EV1/EV2/EV3 | multiple KB | Real cryptography. Used in access control.                |
