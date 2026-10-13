@@ -166,6 +166,7 @@ The practical takeaway: MIFARE Classic's Crypto-1 cipher was broken in 2008 and 
 - [Web NFC on Chrome](https://developer.chrome.com/docs/capabilities/nfc) - Implementation notes and current browser support.
 - [ISO/IEC 14443](https://en.wikipedia.org/wiki/ISO/IEC_14443) - Proximity cards, the standard behind Type A and Type B tags.
 - [ISO/IEC 18092](https://en.wikipedia.org/wiki/ISO/IEC_18092) - NFCIP-1, covering peer-to-peer mode.
+- [ISO/IEC 15693](https://en.wikipedia.org/wiki/ISO/IEC_15693) - Vicinity cards standard (longer-range 13.56 MHz RFID/NFC, e.g. ICODE).
 
 Tag types 1 through 5 are NFC Forum categories, not chip names. NTAG213, NTAG215 and NTAG216 are all Type 2. DESFire is Type 4. Sony FeliCa is Type 3 and appears mostly in Japan.
 
