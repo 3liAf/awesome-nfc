@@ -231,25 +231,27 @@ Store JSON as custom record type.
 
 ## Memory & Sizing
 
+NTAG 215 has 504 bytes of total user memory (pages 4-129 in the datasheet; 126 pages × 4 bytes). The "usable for NDEF" number depends on your record layout. The figures here match the NXP NTAG215 datasheet and [WRITING_TO_NFC.md](./WRITING_TO_NFC.md#memory--sizing).
+
 ### NTAG 215 Memory Layout
 
 ```
 0-2:    UID (7 bytes)                  [Read-only, burned in]
 3-4:    OTP area                       [One-time programmable]
 5-6:    Capability Container (CC)      [Defines NFC structure]
-7-63:   User data area (180 bytes)     [Your NDEF data here]
-64-65:  Dynamic lock bytes
-66-67:  Config
+7-129:  User data area (~488 bytes)    [Your NDEF data here, single short-URI record]
+130-131: Dynamic lock bytes
+132-133: Config
 ```
 
-**Usable space for NDEF: 180 bytes**
+**Usable space for NDEF: ~488 bytes (single short-URI record).** Multi-record or text-heavy payloads reduce this because each NDEF record adds TLV overhead (NDEF Message header + record header + type/length bytes + terminator TLV).
 
 ### Practical Examples
 
 **URL "https://example.com"**
 - Raw: 19 bytes
 - With NDEF overhead: ~25 bytes
-- % of NTAG 215: 14%
+- % of NTAG 215: 5%
 - ✓ Plenty of room
 
 **Full vCard**
@@ -266,8 +268,8 @@ END:VCARD
 ```
 - Raw: ~180 bytes
 - With NDEF overhead: ~200 bytes
-- % of NTAG 215: 111%
-- ✗ Doesn't fit!
+- % of NTAG 215: 41%
+- ✓ Fits with room to spare
 
 **Compact vCard (fits!)**
 ```
@@ -280,7 +282,7 @@ END:VCARD
 ```
 - Raw: ~90 bytes
 - With NDEF overhead: ~100 bytes
-- % of NTAG 215: 56%
+- % of NTAG 215: 20%
 - ✓ Fits comfortably
 
 **Pro tip:** Store URLs instead of full data. Use short URLs (bit.ly, tinyurl) or your domain shortener.
@@ -289,13 +291,13 @@ END:VCARD
 
 ```
 0-63:   Same as NTAG 215
-64-955: Extra user data (888 total usable bytes)
+64-955: Extra user data (~868 total usable bytes for a single short-URI record)
 ```
 
-**Usable space: 888 bytes**
+**Usable space: ~868 bytes (single short-URI record).** Same caveat as NTAG 215: multi-record payloads reduce this.
 
 Only use if:
-- You genuinely need more than 180 bytes
+- You genuinely need more than ~488 bytes
 - You can afford the slightly higher cost (~$0.40 vs $0.30)
 - Your reader supports it (most do)
 
