@@ -156,6 +156,7 @@ Included because understanding the attacks is how you choose the right chip. For
 - [crypto1_bs](https://github.com/aczid/crypto1_bs) - Bitsliced Crypto-1 brute forcer.
 - [miLazyCracker](https://github.com/nfc-tools/miLazyCracker) - Wraps the hardnested attack into a single command.
 - [magspoof](https://github.com/samyk/magspoof) - Samy Kamkar on magnetic stripe and contactless emulation. Adjacent to NFC, and the research is worth reading.
+- [RelayGuard](https://github.com/HR-31/relayguard) - Issuer-side detector for NFC contactless relay ("Ghost Tap") fraud; the defensive counterpart to the relay tooling above.
 
 The practical takeaway: MIFARE Classic's Crypto-1 cipher was broken in 2008 and keys can be recovered in seconds. Do not use it for anything that matters. Use DESFire EV2 or EV3 if you need real security, or accept that NTAG chips are open by design and put nothing secret on them.
 
